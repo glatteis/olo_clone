@@ -1,0 +1,116 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://puck.gd" type="Script" id=1]
+[ext_resource path="res://circle.png" type="Texture" id=2]
+[ext_resource path="res://light.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 60.0
+
+[sub_resource type="OccluderPolygon2D" id=2]
+
+closed = true
+cull_mode = 0
+polygon = PoolVector2Array( -0.146088, 60.2053, 18.6613, 57.581, 34.1155, 50.1455, 47.0911, 37.4614, 54.964, 24.9232, 59.0462, 12.9681, 60.0668, 0.138212, 59.0778, -12.9834, 54.2449, -26.4612, 42.6101, -42.5709, 29.9014, -52.4157, 17.1926, -57.7856, 0.545914, -60.1126, -13.5948, -58.5016, -26.6616, -54.2057, -39.5493, -45.4349, -48.3202, -36.485, -54.406, -26.4612, -58.523, -14.8264, -60.3129, 0.209282, -58.702, 13.5798, -54.764, 25.2146, -49.0361, 35.2384, -39.7283, 45.0832, -28.8095, 52.601, -14.6688, 58.1499 )
+
+[sub_resource type="CircleShape2D" id=3]
+
+custom_solver_bias = 0.0
+radius = 1.0
+
+[node name="puck" type="RigidBody2D"]
+
+input_pickable = true
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 0.5
+bounce = 0.2
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = 1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Material", "Pickable", "Transform", "Visibility", "Z Index" ]
+
+[node name="circle" type="CollisionShape2D" parent="." index="0"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="circle_sprite" type="Sprite" parent="." index="1"]
+
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="occluder" type="LightOccluder2D" parent="." index="2"]
+
+occluder = SubResource( 2 )
+light_mask = 1
+_sections_unfolded = [ "Visibility" ]
+
+[node name="light" type="Light2D" parent="." index="3"]
+
+enabled = true
+editor_only = false
+texture = ExtResource( 3 )
+offset = Vector2( 0, 0 )
+texture_scale = 3.0
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range_height = 0.0
+range_z_min = -1024
+range_z_max = 1024
+range_layer_min = 0
+range_layer_max = 0
+range_item_cull_mask = 1
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 0 )
+shadow_buffer_size = 2048
+shadow_gradient_length = 0.0
+shadow_filter = 0
+shadow_filter_smooth = 0.0
+shadow_item_cull_mask = 1
+_sections_unfolded = [ "Range", "Shadow", "Transform" ]
+
+[node name="enter_exit_body" type="RigidBody2D" parent="." index="4"]
+
+input_pickable = false
+collision_layer = 32
+collision_mask = 4
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = false
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+_sections_unfolded = [ "Angular", "Collision", "Linear" ]
+
+[node name="enter_exit_shape" type="CollisionShape2D" parent="enter_exit_body" index="0"]
+
+shape = SubResource( 3 )
+
+[connection signal="input_event" from="." to="." method="_on_puck_input_event"]
+
+
